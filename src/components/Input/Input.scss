@@ -13,18 +13,18 @@
         text-transform: uppercase;
         background-image: linear-gradient(
             to bottom,
-            $background-color,
-            $background-color
+            vars.$background-color,
+            vars.$background-color
         );
         padding: 0 2px;
-        color: $primary-blue;
+        color: vars.$primary-blue;
         position: absolute;
         top: -6px;
         left: 1.5rem;
     }
 
     &__field {
-        border: 1px solid $primary-blue;
+        border: 1px solid vars.$primary-blue;
         padding: 12px;
         font-family: 'Work Sans';
         font-style: normal;
@@ -32,7 +32,7 @@
         font-size: 24px;
         line-height: 28px;
         letter-spacing: 0.03em;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
         background-color: transparent;
         width: 100%;
     }

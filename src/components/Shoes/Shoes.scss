@@ -7,7 +7,7 @@
     &__heading::before,
     &__heading::after {
         content: '';
-        border: 1px solid $primary-blue;
+        border: 1px solid vars.$primary-blue;
         display: inline-block;
         width: 10.7rem;
         margin-bottom: 6px;
@@ -22,7 +22,7 @@
     }
 
     &__heading {
-        color: $primary-blue;
+        color: vars.$primary-blue;
         text-transform: uppercase;
     }
 
@@ -33,7 +33,7 @@
 
     &__button {
         align-self: center;
-        background-color: $primary-red;
+        background-color: vars.$primary-red;
         border: none;
         border-radius: 999rem;
         font-size: 28px;

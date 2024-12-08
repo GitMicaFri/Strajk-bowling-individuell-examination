@@ -2,7 +2,7 @@
 
 .error-message::before {
     content: '';
-    border: 0px solid $primary-red;
+    border: 0px solid vars.$primary-red;
     border-width: 10px;
     border-top-color: transparent;
     border-left-color: transparent;
@@ -13,8 +13,8 @@
 }
 
 .error-message {
-    border: 1px solid $primary-red;
-    background-color: $primary-red;
+    border: 1px solid vars.$primary-red;
+    background-color: vars.$primary-red;
     position: relative;
     display: flex;
     justify-content: center;
