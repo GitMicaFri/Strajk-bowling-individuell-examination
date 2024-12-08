@@ -1,5 +1,7 @@
 import "./Shoes.scss";
 import { nanoid } from "nanoid";
+import React from 'react';
+
 
 import Input from "../Input/Input";
 

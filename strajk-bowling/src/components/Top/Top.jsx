@@ -1,4 +1,6 @@
 import './Top.scss';
+import React from 'react';
+
 import logo from '../../assets/strajk-logo.svg';
 
 function Top({ title }) {

@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as vars;
 
 .top {
     align-self: center;
@@ -8,7 +8,7 @@
         margin: 0 auto;
         display: block;
     }
-    
+
     &__title {
         font-family: 'Bebas Neue';
         font-style: normal;
@@ -20,4 +20,3 @@
         margin: 0.5rem 0 1rem 0;
     }
 }
-

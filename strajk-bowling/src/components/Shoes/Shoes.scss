@@ -1,11 +1,12 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as vars;
 
 .shoes {
     display: flex;
     flex-direction: column;
 
-    &__heading::before, &__heading::after {
-        content: "";
+    &__heading::before,
+    &__heading::after {
+        content: '';
         border: 1px solid $primary-blue;
         display: inline-block;
         width: 10.7rem;

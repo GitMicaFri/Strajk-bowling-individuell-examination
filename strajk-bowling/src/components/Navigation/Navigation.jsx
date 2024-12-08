@@ -1,4 +1,6 @@
 import './Navigation.scss';
+import React from 'react';
+
 import navicon from '../../assets/navicon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -9,8 +11,12 @@ function Navigation() {
 
     return (
         <nav className={ `navigation ${ showMenu ? 'show-menu' : '' }` }>
-            <img src={ navicon } className='navigation__icon'
-            onClick={ () => { setShowMenu(!showMenu) }} />
+            <img 
+            src={navicon} 
+            className="navigation__icon" 
+            alt="Navigation icon"
+            onClick={() => { setShowMenu(!showMenu) }} 
+            />
             <a href="#" className={ `navigation__link ${ showMenu ? '' : 'hide' }` } 
             onClick={ () => { navigate('/') }}>Booking</a>
             <a href="#" className={ `navigation__link ${ showMenu ? '' : 'hide' }` } 

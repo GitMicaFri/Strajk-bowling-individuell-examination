@@ -1,9 +1,9 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as vars;
 
 .booking-info {
-    
-    &__heading::before, &__heading::after {
-        content: "";
+    &__heading::before,
+    &__heading::after {
+        content: '';
         border: 1px solid $primary-blue;
         display: inline-block;
         width: 5.8rem;
@@ -19,10 +19,10 @@
     }
 
     &__heading {
-        color: #441D81;
+        color: #441d81;
         text-transform: uppercase;
     }
-    
+
     &__details {
         display: flex;
         flex-direction: column;
@@ -33,20 +33,20 @@
         width: 100%;
         cursor: pointer;
         position: absolute;
-      }
+    }
 
     &__when {
         margin-bottom: 1rem;
         display: flex;
         gap: 2.5rem;
 
-
         input:first-child {
             margin-right: 0.5rem;
         }
     }
 
-    &__who, &__lanes {
+    &__who,
+    &__lanes {
         margin-bottom: 1rem;
     }
 }

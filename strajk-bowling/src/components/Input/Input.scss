@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as vars;
 
 .input {
     position: relative;
@@ -11,14 +11,18 @@
         line-height: 14px;
         letter-spacing: 0.03em;
         text-transform: uppercase;
-        background-image: linear-gradient(to bottom, $background-color, $background-color);
+        background-image: linear-gradient(
+            to bottom,
+            $background-color,
+            $background-color
+        );
         padding: 0 2px;
         color: $primary-blue;
         position: absolute;
         top: -6px;
         left: 1.5rem;
     }
-    
+
     &__field {
         border: 1px solid $primary-blue;
         padding: 12px;
@@ -33,4 +37,3 @@
         width: 100%;
     }
 }
-
