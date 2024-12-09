@@ -1,64 +1,76 @@
-import "./Confirmation.scss";
+import React from "react";
 import { useLocation } from "react-router-dom";
 
-import Top from "../components/Top/Top";
-import Navigation from "../components/Navigation/Navigation";
-import Input from "../components/Input/Input";
-
-function Confirmation() {
+const Confirmation = () => {
+  // Hämta state via routing eller från sessionStorage
   const { state } = useLocation();
+  const bookingDetails = state?.confirmationDetails || JSON.parse(sessionStorage.getItem("bookingDetails"));
 
-  const confirmation =
-    state?.confirmationDetails ||
-    JSON.parse(sessionStorage.getItem("confirmation"));
+  // Om inga bokningsdetaljer hittas
+  if (!bookingDetails) {
+    return <h2>Inga bokning gjord</h2>;
+  }
 
+  // Rendera bokningsdetaljer
   return (
     <section className="confirmation">
-      <Navigation />
-      <Top title="See you soon!" />
-      {state || confirmation ? (
-        <form className="confirmation__details">
-          <Input
-            label="When"
+      <form className="confirmation__details">
+        <section className="input">
+          <label className="input__label" htmlFor="when">
+            When
+          </label>
+          <input
+            id="when"
+            className="input__field confirmation__input"
             type="text"
-            customClass="confirmation__input"
-            defaultValue={confirmation.when.replace("T", " ")}
-            disabled="disabled"
+            value={bookingDetails.when}
+            disabled
           />
-          <Input
-            label="Who"
+        </section>
+        <section className="input">
+          <label className="input__label" htmlFor="who">
+            Who
+          </label>
+          <input
+            id="who"
+            className="input__field confirmation__input"
             type="text"
-            customClass="confirmation__input"
-            defaultValue={confirmation.people}
-            disabled="disabled"
+            value={bookingDetails.who}
+            disabled
           />
-          <Input
-            label="Lanes"
+        </section>
+        <section className="input">
+          <label className="input__label" htmlFor="lanes">
+            Lanes
+          </label>
+          <input
+            id="lanes"
+            className="input__field confirmation__input"
             type="text"
-            customClass="confirmation__input"
-            defaultValue={confirmation.lanes}
-            disabled="disabled"
+            value={bookingDetails.lanes}
+            disabled
           />
-          <Input
-            label="Booking number"
+        </section>
+        <section className="input">
+          <label className="input__label" htmlFor="booking-number">
+            Booking number
+          </label>
+          <input
+            id="booking-number"
+            className="input__field confirmation__input"
             type="text"
-            customClass="confirmation__input"
-            defaultValue={confirmation.id}
-            disabled="disabled"
+            value={bookingDetails.bookingNumber}
+            disabled
           />
-          <article className="confirmation__price">
-            <p>Total:</p>
-            <p>{confirmation.price} sek</p>
-          </article>
-          <button className="button confirmation__button">
-            Sweet, let's go!
-          </button>
-        </form>
-      ) : (
-        <h2 className="confirmation__no-booking">Inga bokning gjord!</h2>
-      )}
+        </section>
+        <article className="confirmation__price">
+          <p>Total:</p>
+          <p>{bookingDetails.totalPrice} sek</p>
+        </article>
+        <button className="button confirmation__button">Sweet, let's go!</button>
+      </form>
     </section>
   );
-}
+};
 
 export default Confirmation;
