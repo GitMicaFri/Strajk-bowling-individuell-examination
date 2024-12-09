@@ -1,8 +1,8 @@
-@use './variables';
+@use './variables' as vars;
 
 .button {
     text-transform: uppercase;
-    background-color: variables.$primary-red;
+    background-color: vars.$primary-red; // Korrekt användning av alias
     color: #fff;
     font-family: 'Work Sans';
     font-style: normal;
@@ -13,5 +13,5 @@
     letter-spacing: 0.03em;
     border: none;
     padding: 1rem 0;
-    border-radius: variables.$border-radius;
+    border-radius: vars.$border-radius; // Korrekt användning av alias
 }

@@ -1,14 +1,13 @@
 import "./Shoes.scss";
 import { nanoid } from "nanoid";
-import React from 'react';
-
+import React from "react";
 
 import Input from "../Input/Input";
 
-function Shoes({ updateSize, addShoe, removeShoe, shoes }) {
+function Shoes({ updateSize, addShoe, shoes }) {
   const shoeComps = shoes.map((input, index) => {
     const label = `Shoe size / person ${index + 1}`;
-    const shoeInput = (
+    return (
       <article className="shoes__form" key={input.id}>
         <Input
           label={label}
@@ -18,18 +17,8 @@ function Shoes({ updateSize, addShoe, removeShoe, shoes }) {
           handleChange={updateSize}
           maxLength={2}
         />
-        <button
-          className="shoes__button shoes__button--small"
-          onClick={() => {
-            removeShoe(input.id);
-          }}
-        >
-          -
-        </button>
       </article>
     );
-
-    return shoeInput;
   });
 
   return (
