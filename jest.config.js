@@ -11,4 +11,7 @@ module.exports = {
         '@testing-library/jest-dom',
         '<rootDir>/jest.setup.js',
     ],
+    collectCoverage: true,
+    coverageProvider: 'v8',
+    coverageReporters: ['json', 'json-summary'],
 };

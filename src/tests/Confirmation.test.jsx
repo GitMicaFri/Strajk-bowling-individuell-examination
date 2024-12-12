@@ -9,15 +9,16 @@ describe("Confirmation Component", () => {
   });
 
   test("renders booking details from sessionStorage", () => {
-    const mockBookingDetails = {
-      when: "2024-12-31 18:00",
-      who: 4,
-      lanes: 2,
-      bookingNumber: "12345",
-      totalPrice: 680,
-    };
-
-    sessionStorage.setItem("bookingDetails", JSON.stringify(mockBookingDetails));
+    sessionStorage.setItem(
+      "confirmation",
+      JSON.stringify({
+        when: "2024-12-12T12:00",
+        people: 5,
+        lanes: 2,
+        price: 500,
+        id: "12345-VERY-UNIQUE",
+      })
+    );
 
     render(
       <MemoryRouter>
@@ -25,10 +26,14 @@ describe("Confirmation Component", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByLabelText(/When/i)).toHaveValue("2024-12-31 18:00");
-    expect(screen.getByLabelText(/Who/i)).toHaveValue("4");
-    expect(screen.getByLabelText(/Lanes/i)).toHaveValue("2");
-    expect(screen.getByLabelText(/Booking number/i)).toHaveValue("12345");
+    expect(screen.getByText("See you soon!")).toBeInTheDocument();
+    expect(screen.getByLabelText("When").value).toBe("2024-12-12 12:00");
+    expect(screen.getByLabelText("Who").value).toBe("5");
+    expect(screen.getByLabelText("Lanes").value).toBe("2");
+    expect(screen.getByLabelText("Booking number").value).toBe(
+      "12345-VERY-UNIQUE"
+    );
+    expect(screen.findByText(`500 SEK`)).toBeDefined();
   });
 
   test("renders fallback message if no booking exists", () => {
@@ -40,29 +45,5 @@ describe("Confirmation Component", () => {
 
     const fallbackMessage = screen.getByText(/Inga bokning gjord/i);
     expect(fallbackMessage).toBeInTheDocument();
-  });
-
-  test("renders booking details passed as state", () => {
-    const mockState = {
-      confirmationDetails: {
-        when: "2024-12-31 18:00",
-        who: 3,
-        lanes: 1,
-        bookingNumber: "54321",
-        totalPrice: 480,
-      },
-    };
-
-    render(
-      <MemoryRouter initialEntries={[{ state: mockState }]}>
-        <Confirmation />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByLabelText(/When/i)).toHaveValue("2024-12-31 18:00");
-    expect(screen.getByLabelText(/Who/i)).toHaveValue("3");
-    expect(screen.getByLabelText(/Lanes/i)).toHaveValue("1");
-    expect(screen.getByLabelText(/Booking number/i)).toHaveValue("54321");
-    expect(screen.getByText(/480 sek/i)).toBeInTheDocument();
   });
 });
