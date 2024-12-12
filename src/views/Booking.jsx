@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Booking.scss";
 
@@ -19,6 +19,7 @@ function Booking() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Funktion för att uppdatera bokningsdetaljer
   function updateBookingDetails(event) {
     const { name, value } = event.target;
     setError("");
@@ -29,6 +30,7 @@ function Booking() {
     }));
   }
 
+  // Funktion för att uppdatera storlek på skor
   function updateSize(event) {
     const { value, name } = event.target;
     setError("");
@@ -42,80 +44,71 @@ function Booking() {
     }
   }
 
+  // Funktion för att lägga till en ny sko
   function addShoe(name) {
     setError("");
-
     setShoes([...shoes, { id: name, size: "" }]);
   }
 
+  // Funktion för att ta bort en sko
   function removeShoe(name) {
     setError("");
-
     setShoes(shoes.filter((shoe) => shoe.id !== name));
   }
 
-  function isShoeSizesFilled() {
-    let filled = true;
-
-    shoes.map((shoe) => (shoe.size.length > 0 ? filled : (filled = false)));
-
-    return filled;
-  }
-
-  function checkPlayersAndLanes() {
-    const MAX_PLAYERS_PER_LANE = 4;
-    const maxPlayersAllows = booking.lanes * MAX_PLAYERS_PER_LANE;
-
-    if (booking.people <= maxPlayersAllows) return true;
-
-    return false;
-  }
-
-  async function sendBooking(bookingInfo) {
-    const response = await fetch(
-      "https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com",
-      {
-        method: "POST",
-        headers: {
-          "x-api-key": "738c6b9d-24cf-47c3-b688-f4f4c5747662",
-        },
-        body: JSON.stringify(bookingInfo),
-      }
-    );
-    const data = await response.json();
-
-    return data;
-  }
-
+  // Funktion för att jämföra antal personer och antal skor
   function comparePeopleAndShoes() {
     return parseInt(booking.people) === shoes.length;
   }
 
-  function saveConfirmation(confirmation) {
-    return new Promise((resolve) => {
-      sessionStorage.setItem("confirmation", JSON.stringify(confirmation));
+  // Funktion för att skicka bokningsdata till servern
+  async function sendBooking(bookingInfo) {
+    console.log("Sending booking info:", bookingInfo);
 
-      resolve();
-    });
-  }
+    const response = await fetch(
+      // "https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com/confirmation",
+      "/api/confirmation",
+      {
+        method: "POST",
+        headers: {
+          // "x-api-key": "738c6b9d-24cf-47c3-b688-f4f4c5747662",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingInfo),
+      }
+    );
 
-  async function book() {
-    let errorMessage = "";
-
-    if (!booking.when || !booking.lanes || !booking.time || !booking.people) {
-      errorMessage = "Alla fälten måste vara ifyllda";
-    } else if (!comparePeopleAndShoes()) {
-      errorMessage = "Antalet skor måste stämma överens med antal spelare";
-    } else if (!isShoeSizesFilled()) {
-      errorMessage = "Alla skor måste vara ifyllda";
-    } else if (!checkPlayersAndLanes()) {
-      errorMessage = "Det får max vara 4 spelare per bana";
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // Om det finns något fel, sätt error och avsluta funktionen
-    if (errorMessage) {
-      setError(errorMessage);
-      return; // Stoppa här om ett fel inträffar
+    return await response.json();
+  }
+
+  // Funktion för att spara bokningsbekräftelse
+  function saveConfirmation(confirmation) {
+    console.log('confirmation', confirmation)
+    sessionStorage.setItem("confirmation", JSON.stringify(confirmation));
+  }
+
+  // Funktion för att hantera bokningen
+  async function book() {
+    if (!booking.when || !booking.lanes || !booking.time || !booking.people) {
+      setError("Alla fälten måste vara ifyllda");
+      return;
+    }
+    if (booking.people <= 0) {
+      setError("Antal spelare måste vara minst 1.");
+      return;
+    }
+    if (booking.lanes <= 0) {
+      setError("Antal banor måste vara minst 1.");
+      return;
+    }
+    if (!comparePeopleAndShoes()) {
+      console.log("Error triggered: Skor och spelare matchar inte")
+      setError("Antalet skor måste stämma överens med antal spelare");
+      return;
     }
 
     const bookingInfo = {
@@ -125,16 +118,13 @@ function Booking() {
       shoes: shoes.map((shoe) => shoe.size),
     };
 
-    console.log(!error);
-
-    console.log(bookingInfo);
-
-    const confirmation = await sendBooking(bookingInfo);
-    await saveConfirmation(confirmation);
-
-    navigate("/confirmation", {
-      state: { confirmationDetails: confirmation },
-    });
+    try {
+      const confirmation = await sendBooking(bookingInfo);
+      saveConfirmation(confirmation);
+      navigate("/confirmation", { state: { confirmationDetails: confirmation } });
+    } catch (error) {
+      setError("Det gick inte att genomföra bokningen. Försök igen.");
+    }
   }
 
   return (
@@ -151,7 +141,8 @@ function Booking() {
       <button className="button booking__button" onClick={book}>
         strIIIIIike!
       </button>
-      {error ? <ErrorMessage message={error} /> : ""}
+
+      {error && <ErrorMessage message={error} />}
     </section>
   );
 }

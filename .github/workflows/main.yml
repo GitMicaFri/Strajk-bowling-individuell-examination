@@ -4,14 +4,14 @@ on:
     # Trigger för manuella körningar
     workflow_dispatch:
     # Trigger för push till main och testning-grenarna
-    push:
-        branches:
-            - main
-            - testning
-    # Trigger för pull requests mot main
-    pull_request:
-        branches:
-            - main
+    # push:
+    #     branches:
+    #         - main
+    #         - test
+    # # Trigger för pull requests mot main
+    # pull_request:
+    #     branches:
+    #         - main
 
 jobs:
     build-and-test:

@@ -1,0 +1,10 @@
+{
+    "confirmation": {
+        "when": "2024-12-18T21:00",
+        "lanes": "1",
+        "people": "2",
+        "shoes": ["40", "42"],
+        "bookingNumber": "12345",
+        "totalPrice": 300
+    }
+}
